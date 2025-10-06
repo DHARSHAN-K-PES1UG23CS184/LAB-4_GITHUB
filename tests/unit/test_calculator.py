@@ -3,7 +3,7 @@ Unit Tests for Calculator
 Students start with 2 passing tests, then add more
 """
 import pytest
-from src.calculator import add, divide, subtract
+from src.calculator import add, subtract, multiply, divide, power, sqrt
 
 class TestBasicOperations:
     """Test basic arithmetic operations"""
@@ -17,6 +17,7 @@ class TestBasicOperations:
         """Test subtracting positive numbers"""
         assert subtract(5, 3) == 2
         assert subtract(10, 4) == 6
+
 
 class TestMultiplyDivideWithValidation:
     """Test multiplication and division with input validation."""
@@ -32,5 +33,36 @@ class TestMultiplyDivideWithValidation:
         """Test divide rejects non-numeric inputs."""
         with pytest.raises(TypeError, match="Division requires numeric inputs"):
             divide("10", 2)
+    
+    def test_divide_by_zero(self):
+        """Test division by zero raises error."""
+        with pytest.raises(ValueError, match="division by zero"):
+            divide(10, 0)
 
-# TODO: Students will add TestMultiplyDivide class
+
+class TestMultiplyDivide:
+    """Test multiplication and division results"""
+    
+    def test_multiply_valid_numbers(self):
+        assert multiply(2, 3) == 6
+        assert multiply(-2, 4) == -8
+    
+    def test_divide_valid_numbers(self):
+        assert divide(10, 2) == 5
+        assert divide(-9, 3) == -3
+
+
+class TestPowerAndSqrt:
+    """Test power and square root functions"""
+    
+    def test_power(self):
+        assert power(2, 3) == 8
+        assert power(5, 0) == 1
+    
+    def test_sqrt_valid(self):
+        assert sqrt(9) == 3
+        assert round(sqrt(2), 3) == 1.414
+    
+    def test_sqrt_invalid(self):
+        with pytest.raises(ValueError, match="Cannot take the square root"):
+            sqrt(-4)
